@@ -82,12 +82,13 @@ func (keeper Keeper) SubmitProposal(ctx sdk.Context, messages []sdk.Msg, metadat
 	proposalID, err := keeper.GetProposalID(ctx)
 	println("SubmitProposal 3 ")
 	if err != nil {
+		println("check err: ", err.Error())
 		return v1.Proposal{}, err
 	}
 
 	submitTime := ctx.BlockHeader().Time
 	depositPeriod := keeper.GetParams(ctx).MaxDepositPeriod
-
+	println("check MaxDepositPeriod")
 	proposal, err := v1.NewProposal(messages, proposalID, submitTime, submitTime.Add(*depositPeriod), metadata, title, summary, proposer)
 	println("SubmitProposal 4 ")
 	if err != nil {
@@ -250,6 +251,7 @@ func (keeper Keeper) GetProposalID(ctx sdk.Context) (proposalID uint64, err erro
 	store := ctx.KVStore(keeper.storeKey)
 	bz := store.Get(types.ProposalIDKey)
 	if bz == nil {
+		println("initial proposal ID hasn't been set")
 		return 0, sdkerrors.Wrap(types.ErrInvalidGenesis, "initial proposal ID hasn't been set")
 	}
 
