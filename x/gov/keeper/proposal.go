@@ -43,22 +43,26 @@ func (keeper Keeper) SubmitProposal(ctx sdk.Context, messages []sdk.Msg, metadat
 
 		// perform a basic validation of the message
 		if err := msg.ValidateBasic(); err != nil {
+			println("ValidateBasic ")
 			return v1.Proposal{}, sdkerrors.Wrap(types.ErrInvalidProposalMsg, err.Error())
 		}
 
 		signers := msg.GetSigners()
 		if len(signers) != 1 {
+			println("GetSigners ")
 			return v1.Proposal{}, types.ErrInvalidSigner
 		}
 
 		// assert that the governance module account is the only signer of the messages
 		if !signers[0].Equals(keeper.GetGovernanceAccount(ctx).GetAddress()) {
+			println("GetGovernanceAccount ")
 			return v1.Proposal{}, sdkerrors.Wrapf(types.ErrInvalidSigner, signers[0].String())
 		}
 
 		// use the msg service router to see that there is a valid route for that message.
 		handler := keeper.router.Handler(msg)
 		if handler == nil {
+			println("handler ")
 			return v1.Proposal{}, sdkerrors.Wrap(types.ErrUnroutableProposalMsg, sdk.MsgTypeURL(msg))
 		}
 
@@ -71,8 +75,10 @@ func (keeper Keeper) SubmitProposal(ctx sdk.Context, messages []sdk.Msg, metadat
 			cacheCtx, _ := ctx.CacheContext()
 			if _, err := handler(cacheCtx, msg); err != nil {
 				if errors.Is(types.ErrNoProposalHandlerExists, err) {
+					println("ErrNoProposalHandlerExists")
 					return v1.Proposal{}, err
 				}
+				println("ErrInvalidProposalContent")
 				return v1.Proposal{}, sdkerrors.Wrap(types.ErrInvalidProposalContent, err.Error())
 			}
 		}
@@ -80,7 +86,7 @@ func (keeper Keeper) SubmitProposal(ctx sdk.Context, messages []sdk.Msg, metadat
 	}
 
 	proposalID, err := keeper.GetProposalID(ctx)
-	println("SubmitProposal 3 ")
+	println("SubmitProposal 4 ")
 	if err != nil {
 		println("check err: ", err.Error())
 		return v1.Proposal{}, err
@@ -90,7 +96,7 @@ func (keeper Keeper) SubmitProposal(ctx sdk.Context, messages []sdk.Msg, metadat
 	depositPeriod := keeper.GetParams(ctx).MaxDepositPeriod
 	println("check MaxDepositPeriod")
 	proposal, err := v1.NewProposal(messages, proposalID, submitTime, submitTime.Add(*depositPeriod), metadata, title, summary, proposer)
-	println("SubmitProposal 4 ")
+	println("SubmitProposal 5 ")
 	if err != nil {
 		return v1.Proposal{}, err
 	}
