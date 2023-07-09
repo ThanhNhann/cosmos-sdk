@@ -42,6 +42,7 @@ func (rtr *router) Seal() {
 // AddRoute adds a governance handler for a given path. It returns the Router
 // so AddRoute calls can be linked. It will panic if the router is sealed.
 func (rtr *router) AddRoute(path string, h Handler) Router {
+	println("check path route: ", path)
 	if rtr.sealed {
 		panic("router sealed; cannot add route handler")
 	}
@@ -54,6 +55,7 @@ func (rtr *router) AddRoute(path string, h Handler) Router {
 	}
 
 	rtr.routes[path] = h
+	println("check Route %s", rtr.routes[path])
 	return rtr
 }
 
