@@ -222,6 +222,8 @@ func (keeper Keeper) InactiveProposalQueueIterator(ctx sdk.Context, endTime time
 // assertMetadataLength returns an error if given metadata length
 // is greater than a pre-defined MaxMetadataLen.
 func (keeper Keeper) assertMetadataLength(metadata string) error {
+	println("check metadata: ", metadata)
+	println("check condition: ", keeper.config.MaxMetadataLen)
 	if metadata != "" && uint64(len(metadata)) > keeper.config.MaxMetadataLen {
 		return types.ErrMetadataTooLong.Wrapf("got metadata with length %d", len(metadata))
 	}
