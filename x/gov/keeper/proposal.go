@@ -14,16 +14,19 @@ import (
 // SubmitProposal creates a new proposal given an array of messages
 func (keeper Keeper) SubmitProposal(ctx sdk.Context, messages []sdk.Msg, metadata, title, summary string, proposer sdk.AccAddress) (v1.Proposal, error) {
 	err := keeper.assertMetadataLength(metadata)
+	println("SubmitProposal 1 ")
 	if err != nil {
 		return v1.Proposal{}, err
 	}
 
 	// assert summary is no longer than predefined max length of metadata
 	err = keeper.assertMetadataLength(summary)
+	println("SubmitProposal 2 ")
 	if err != nil {
 		return v1.Proposal{}, err
 	}
 
+	println("SubmitProposal 3 ")
 	// assert title is no longer than predefined max length of metadata
 	err = keeper.assertMetadataLength(title)
 	if err != nil {
@@ -77,6 +80,7 @@ func (keeper Keeper) SubmitProposal(ctx sdk.Context, messages []sdk.Msg, metadat
 	}
 
 	proposalID, err := keeper.GetProposalID(ctx)
+	println("SubmitProposal 3 ")
 	if err != nil {
 		return v1.Proposal{}, err
 	}
@@ -85,6 +89,7 @@ func (keeper Keeper) SubmitProposal(ctx sdk.Context, messages []sdk.Msg, metadat
 	depositPeriod := keeper.GetParams(ctx).MaxDepositPeriod
 
 	proposal, err := v1.NewProposal(messages, proposalID, submitTime, submitTime.Add(*depositPeriod), metadata, title, summary, proposer)
+	println("SubmitProposal 4 ")
 	if err != nil {
 		return v1.Proposal{}, err
 	}

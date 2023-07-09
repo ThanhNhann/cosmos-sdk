@@ -196,6 +196,7 @@ $ %s tx gov submit-legacy-proposal --title="Test Proposal" --description="My awe
 			}
 
 			content, ok := v1beta1.ContentFromProposalType(proposal.Title, proposal.Description, proposal.Type)
+			println("check content: ", content.String())
 			if !ok {
 				return fmt.Errorf("failed to create proposal content: unknown proposal type %s", proposal.Type)
 			}
@@ -204,7 +205,7 @@ $ %s tx gov submit-legacy-proposal --title="Test Proposal" --description="My awe
 			if err != nil {
 				return fmt.Errorf("invalid message: %w", err)
 			}
-
+			println("go to this")
 			return tx.GenerateOrBroadcastTxCLI(clientCtx, cmd.Flags(), msg)
 		},
 	}

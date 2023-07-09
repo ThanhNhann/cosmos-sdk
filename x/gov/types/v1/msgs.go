@@ -30,11 +30,12 @@ func NewMsgSubmitProposal(messages []sdk.Msg, initialDeposit sdk.Coins, proposer
 		Title:          title,
 		Summary:        summary,
 	}
-
+	println("SubmitProposal legacy 1")
 	anys, err := sdktx.SetMsgs(messages)
 	if err != nil {
 		return nil, err
 	}
+	println("SubmitProposal legacy 2")
 
 	m.Messages = anys
 

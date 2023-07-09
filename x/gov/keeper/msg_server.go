@@ -46,7 +46,7 @@ func (k msgServer) SubmitProposal(goCtx context.Context, msg *v1.MsgSubmitPropos
 	if err != nil {
 		return nil, err
 	}
-
+	println("MsgServer.SubmitProposal")
 	proposal, err := k.Keeper.SubmitProposal(ctx, proposalMsgs, msg.Metadata, msg.Title, msg.Summary, proposer)
 	if err != nil {
 		return nil, err
@@ -220,7 +220,7 @@ func (k legacyMsgServer) SubmitProposal(goCtx context.Context, msg *v1beta1.MsgS
 	if err != nil {
 		return nil, fmt.Errorf("error converting legacy content into proposal message: %w", err)
 	}
-
+	println("legacyMsgServer.SubmitProposal")
 	proposal, err := v1.NewMsgSubmitProposal(
 		[]sdk.Msg{contentMsg},
 		msg.InitialDeposit,
