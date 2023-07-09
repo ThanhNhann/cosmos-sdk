@@ -32,13 +32,14 @@ func (keeper Keeper) SubmitProposal(ctx sdk.Context, messages []sdk.Msg, metadat
 	if err != nil {
 		return v1.Proposal{}, err
 	}
-
+	println("pass check 3")
 	// Will hold a comma-separated string of all Msg type URLs.
 	msgsStr := ""
 
 	// Loop through all messages and confirm that each has a handler and the gov module account
 	// as the only signer
 	for _, msg := range messages {
+		println("check msg: ", msg.String())
 		msgsStr += fmt.Sprintf(",%s", sdk.MsgTypeURL(msg))
 
 		// perform a basic validation of the message
