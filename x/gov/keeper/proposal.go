@@ -66,7 +66,7 @@ func (keeper Keeper) SubmitProposal(ctx sdk.Context, messages []sdk.Msg, metadat
 			println("handler ")
 			return v1.Proposal{}, sdkerrors.Wrap(types.ErrUnroutableProposalMsg, sdk.MsgTypeURL(msg))
 		}
-
+		println("go to here man")
 		// Only if it's a MsgExecLegacyContent do we try to execute the
 		// proposal in a cached context.
 		// For other Msgs, we do not verify the proposal messages any further.
@@ -74,6 +74,7 @@ func (keeper Keeper) SubmitProposal(ctx sdk.Context, messages []sdk.Msg, metadat
 		// ref: https://github.com/cosmos/cosmos-sdk/pull/10868#discussion_r784872842
 		if msg, ok := msg.(*v1.MsgExecLegacyContent); ok {
 			cacheCtx, _ := ctx.CacheContext()
+			println("go this check")
 			if _, err := handler(cacheCtx, msg); err != nil {
 				if errors.Is(types.ErrNoProposalHandlerExists, err) {
 					println("ErrNoProposalHandlerExists")
@@ -83,9 +84,9 @@ func (keeper Keeper) SubmitProposal(ctx sdk.Context, messages []sdk.Msg, metadat
 				return v1.Proposal{}, sdkerrors.Wrap(types.ErrInvalidProposalContent, err.Error())
 			}
 		}
-
+		println("go to here too man")
 	}
-
+	println("go to get proposalID")
 	proposalID, err := keeper.GetProposalID(ctx)
 	println("SubmitProposal 4 ")
 	if err != nil {
