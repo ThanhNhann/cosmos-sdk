@@ -135,6 +135,7 @@ metadata example:
 			if err != nil {
 				return err
 			}
+			println("go to here man lol")
 
 			msg, err := v1.NewMsgSubmitProposal(msgs, deposit, clientCtx.GetFromAddress().String(), metadata, title, summary)
 			if err != nil {
