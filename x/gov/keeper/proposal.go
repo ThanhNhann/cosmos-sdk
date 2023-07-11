@@ -76,7 +76,7 @@ func (keeper Keeper) SubmitProposal(ctx sdk.Context, messages []sdk.Msg, metadat
 			cacheCtx, _ := ctx.CacheContext()
 			println("go this check")
 			if _, err := handler(cacheCtx, msg); err != nil {
-				panic(err)
+				panic(err.Error())
 				println("catch error here: ", err.Error())
 				if errors.Is(types.ErrNoProposalHandlerExists, err) {
 					println("ErrNoProposalHandlerExists")
@@ -85,6 +85,7 @@ func (keeper Keeper) SubmitProposal(ctx sdk.Context, messages []sdk.Msg, metadat
 				println("ErrInvalidProposalContent")
 				return v1.Proposal{}, sdkerrors.Wrap(types.ErrInvalidProposalContent, err.Error())
 			}
+			println("pass handle")
 		}
 		println("go to here too man")
 	}

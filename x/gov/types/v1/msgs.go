@@ -31,6 +31,7 @@ func NewMsgSubmitProposal(messages []sdk.Msg, initialDeposit sdk.Coins, proposer
 		Summary:        summary,
 	}
 	println("SubmitProposal legacy 1")
+	println("vao day that ha")
 	anys, err := sdktx.SetMsgs(messages)
 	if err != nil {
 		return nil, err
