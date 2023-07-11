@@ -31,6 +31,7 @@ var (
 //
 //nolint:interfacer
 func NewMsgSubmitProposal(content Content, initialDeposit sdk.Coins, proposer sdk.AccAddress) (*MsgSubmitProposal, error) {
+	println("go to v1beta1")
 	m := &MsgSubmitProposal{
 		InitialDeposit: initialDeposit,
 		Proposer:       proposer.String(),
