@@ -102,6 +102,7 @@ func (keeper Keeper) SubmitProposal(ctx sdk.Context, messages []sdk.Msg, metadat
 	println("check MaxDepositPeriod")
 	proposal, err := v1.NewProposal(messages, proposalID, submitTime, submitTime.Add(*depositPeriod), metadata, title, summary, proposer)
 	println("SubmitProposal 5 ")
+	println("check proposal: ", proposal.String())
 	if err != nil {
 		return v1.Proposal{}, err
 	}
@@ -120,7 +121,7 @@ func (keeper Keeper) SubmitProposal(ctx sdk.Context, messages []sdk.Msg, metadat
 			sdk.NewAttribute(types.AttributeKeyProposalMessages, msgsStr),
 		),
 	)
-
+	println("pass all check")
 	return proposal, nil
 }
 
