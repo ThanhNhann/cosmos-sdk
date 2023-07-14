@@ -85,6 +85,7 @@ func (k msgServer) SubmitProposal(goCtx context.Context, msg *v1.MsgSubmitPropos
 
 // ExecLegacyContent implements the MsgServer.ExecLegacyContent method.
 func (k msgServer) ExecLegacyContent(goCtx context.Context, msg *v1.MsgExecLegacyContent) (*v1.MsgExecLegacyContentResponse, error) {
+	println("check msg legacy content :", msg.String())
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
 	govAcct := k.GetGovernanceAccount(ctx).GetAddress().String()
